@@ -13,19 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.generated.TunerConstants.ArmConstants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.Util.TalonFXFactory;
 
 public class Arm extends SubsystemBase {
 
-    private TalonFX m_armMotor;
+  private TalonFX m_armMotor = TalonFXFactory.createTalon(ArmConstants.armTalonID, ArmConstants.armTalonCANBus, ArmConstants.kArmConfiguration);
   /** Creates a new Arm. */
   public Arm() {
-    m_armMotor = new TalonFX(ArmConstants.armTalonID, "CAN0");
-    m_armMotor.getConfigurator().apply(ArmConstants.kArmConfiguration, 1);
-
-    this.m_armMotor.setPosition(0);
-    this.m_armMotor.set(0);
-    //
   }
    /**
    * PID arm to position
@@ -33,7 +28,7 @@ public class Arm extends SubsystemBase {
    * @param rotations 0 to 1 rotations
    */
   private void setAngle(double position) {
-   m_armMotor.setControl(ArmConstants.armPositionControl.withPosition(position));
+    m_armMotor.setControl(ArmConstants.armPositionControl.withPosition(position));
   }
 
   /**
